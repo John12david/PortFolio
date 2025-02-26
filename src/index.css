@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f4f9; /* Light background for contrast */
+  color: #333; /* Darker text for better readability */
+}
+
+h1, h2 {
+  color: #0f3460; /* Main heading color */
+  margin: 0;
+  padding: 10px 0;
+}
+
+h1 {
+  font-size: 2.5em; /* Large main heading */
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.8em; /* Subheading size */
+  margin-top: 20px;
+}
+
+.card {
+  background: #ffffff; /* Card background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  margin: 20px auto; /* Center the cards */
+  max-width: 600px; /* Limit width for readability */
+  overflow: hidden; /* Clean overflow */
+}
+
+.collapsible-header {
+  background-color: #0f3460; /* Header background color */
+  color: #fff; /* Text color for header */
+  cursor: pointer; /* Pointer on hover */
+  padding: 15px; /* Padding for header */
+  font-size: 1.2em; /* Font size for header */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.collapsible-header:hover {
+  background-color: #1f487e; /* Darker shade on hover */
+}
+
+.collapsible-content {
+  padding: 15px; /* Padding for content area */
+  background-color: #f9f9f9; /* Light content area */
+  border-top: 1px solid #e0e0e0; /* Light border above content */
+}
+
+.skills,
+.certifications {
+  list-style-type: none; /* Remove default list styles */
+  padding: 0; /* Remove padding */
+  display: flex; /* Use flex for responsive design */
+  flex-wrap: wrap; /* Allow wrapping of items */
+  justify-content: center; /* Center items */
+}
+
+.skills li,
+.certifications li {
+  background: #0f3460; /* Skill and certification background */
+  color: #fff; /* Text color */
+  border-radius: 5px; /* Rounded corners for items */
+  padding: 10px 15px; /* Padding for items */
+  margin: 5px; /* Margin for spacing */
+}
+
+.contact-info {
+  list-style-type: none; /* Remove default list styles */
+  padding: 0; /* Remove padding */
+}
+
+.contact-info li {
+  margin: 5px 0; /* Spacing between contact items */
+}
+
+button {
+  background-color: #0f3460; /* Button background */
+  color: #fff; /* Button text color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners for button */
+  padding: 10px 20px; /* Padding for button */
+  cursor: pointer; /* Pointer on hover */
+  font-size: 1em; /* Font size for button */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+button:hover {
+  background-color: #1f487e; /* Darker button on hover */
+}
+
+.container {
+  max-width: 800px; /* Maximum container width */
+  margin: auto; /* Center container */
+  padding: 20px; /* Padding around container */
+  background-color: #fff; /* Container background */
+  border-radius: 8px; /* Rounded corners for container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for container */
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2em; /* Smaller heading for mobile */
+  }
+
+  h2 {
+    font-size: 1.5em; /* Smaller subheading for mobile */
+  }
+
+  .collapsible-header {
+    font-size: 1em; /* Smaller font for mobile headers */
+  }
+}
