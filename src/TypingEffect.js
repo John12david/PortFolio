@@ -27,7 +27,7 @@ const TypingEffect = ({ text, speed, loop = true }) => {
     const intervalId = setInterval(typeText, speed);
 
     return () => clearInterval(intervalId); // Cleanup on unmount
-  }, [text, speed, index, isTyping]);
+  }, [text, speed, index, isTyping, loop]); // Added 'loop' to dependency array
 
   return <span className="typing-effect">{displayedText}</span>; // Added class for CSS styling
 };
