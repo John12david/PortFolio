@@ -8,7 +8,7 @@ import yourIcon4 from './assets/appdynamics.png';
 import yourIcon5 from './assets/grafana.webp';
 import PerformanceMetrics from './PerformanceMetrics';
 import TypingEffect from './TypingEffect';
-import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'recharts';
+import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, ResponsiveContainer } from 'recharts';
 
 // Scroll to Section Function
 function scrollToSection(id) {
@@ -136,7 +136,7 @@ const ProjectsSection = () => {
     },
     {
       title: "Bank ABC - Egypt",
-      description: "Scaled app for regional traffic.",
+      description: "Scaled Mobile app for regional traffic.",
       tools: "JMeter, AppDynamics",
       results: ["Scalability: +20%", "Error Rate: -5%"],
     },
@@ -180,7 +180,7 @@ const ExperienceSection = () => {
           <ul>
             <li>Led performance testing for web-based banking applications using JMeter.</li>
             <li>Collaborated with development teams to identify performance bottlenecks.</li>
-            <li>Utilized Dynatrace for monitoring and analyzing application performance.</li>
+            <li>Utilized AppDynamics for monitoring and analyzing application performance.</li>
           </ul>
         </div>
         <div className="experience-card">
@@ -188,8 +188,8 @@ const ExperienceSection = () => {
           <p className="job-title">Associate Testing Engineer</p>
           <p className="duration"><strong>August 2022 - April 2023</strong> (9 months)</p>
           <ul>
-            <li>Conducted manual and automated testing on Salesforce applications.</li>
-            <li>Assisted in developing test scripts using Selenium and TestNG.</li>
+            <li>Conducted manual and Performance testing on Salesforce applications.</li>
+            <li>Assisted in developing test scripts using jMeter and Selenium.</li>
             <li>Participated in Agile ceremonies to enhance team collaboration.</li>
           </ul>
         </div>
@@ -204,12 +204,14 @@ const PerformanceDashboard = ({ runStressTestRef }) => {
   const [isTesting, setIsTesting] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
 
+  // Handle window resize to detect mobile view
   React.useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Simulate a stress test with varying load levels
   const runStressTest = (loadLevel = 'medium') => {
     setIsTesting(true);
     setChartData([{ time: '0s', responseTime: 500 }]);
@@ -227,47 +229,57 @@ const PerformanceDashboard = ({ runStressTestRef }) => {
     });
   };
 
+  // Expose the runStressTest function to parent via ref
   React.useImperativeHandle(runStressTestRef, () => ({
     run: () => runStressTest('medium'),
   }));
 
-  const legendIconSize = isMobile ? 10 : 14;
+  const fontSize = isMobile ? '0.7rem' : '1rem'; // Adjust font size for mobile
 
   return (
     <section className="performance-metrics" id="performance-metrics">
       <h2>Performance Dashboard</h2>
       <div className="load-test-buttons">
-        <button onClick={() => runStressTest('low')} disabled={isTesting}>Low Load (50 users)</button>
-        <button onClick={() => runStressTest('medium')} disabled={isTesting}>Medium Load (200 users)</button>
-        <button onClick={() => runStressTest('high')} disabled={isTesting}>High Load (1000 users)</button>
+        <button onClick={() => runStressTest('low')} disabled={isTesting}>
+          Low Load (50 users)
+        </button>
+        <button onClick={() => runStressTest('medium')} disabled={isTesting}>
+          Medium Load (200 users)
+        </button>
+        <button onClick={() => runStressTest('high')} disabled={isTesting}>
+          High Load (1000 users)
+        </button>
       </div>
-      <LineChart width={isMobile ? 300 : 600} height={300} data={chartData}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-        <XAxis dataKey="time" stroke="#00ff00" />
-        <YAxis stroke="#00ff00" />
-        <Tooltip
-          contentStyle={{ background: '#1a1a1a', border: '1px solid #00ff00', color: '#00ff00' }}
-          labelStyle={{ color: '#ffcc00' }}
-        />
-        <Legend
-          iconSize={legendIconSize}
-          iconType="line"
-          wrapperStyle={{ color: '#ff4500', fontSize: isMobile ? '0.8rem' : '1rem' }}
-        />
-        <Line
-          type="monotone"
-          dataKey="responseTime"
-          stroke="#ff4500"
-          strokeWidth={2}
-          dot={{ r: 4, fill: '#ff4500' }}
-          activeDot={{ r: 6, fill: '#ff4500' }}
-          legendType="line"
-        />
-      </LineChart>
+      <div className="chart-wrapper"> {/* Added wrapper for better control */}
+        <ResponsiveContainer width="100%" height={isMobile ? 160 : 220}>
+          <LineChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+            <XAxis dataKey="time" stroke="#00ff00" style={{ fontSize }} interval="preserveStartEnd" /> {/* Optimize X-axis labels */}
+            <YAxis stroke="#00ff00" style={{ fontSize }} />
+            <Tooltip
+              contentStyle={{ background: '#1a1a1a', border: '1px solid #00ff00', color: '#00ff00' }}
+              labelStyle={{ color: '#ffcc00', fontSize }}
+            />
+            <Legend
+              iconType="plainline"
+              wrapperStyle={{ color: '#ff4500', fontSize, paddingTop: isMobile ? 5 : 10 }}
+              className="custom-legend"
+            />
+            <Line
+              type="monotone"
+              dataKey="responseTime"
+              stroke="#ff4500"
+              strokeWidth={isMobile ? 1 : 2}
+              dot={{ r: isMobile ? 2 : 4, fill: '#ff4500' }}
+              activeDot={{ r: isMobile ? 4 : 6, fill: '#ff4500' }}
+              legendType="plainline"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </section>
   );
 };
-
 // Skills Section as Resource Monitor
 const SkillsSection = () => {
   const skills = [

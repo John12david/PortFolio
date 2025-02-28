@@ -70,7 +70,7 @@ html {
 /* Theme Toggle Button */
 .theme-toggle {
   position: fixed;
-  top: 55px;
+  top: px;
   right: 10px;
   padding: 8px 16px;
   background: #ff4500;
@@ -1034,4 +1034,70 @@ html {
     opacity: 1;
     transform: translateY(0);
   }
+}
+/* Ensure the main section is fully responsive */
+.performance-metrics {
+  width: 100%;
+  max-width: 100vw; /* Constrain to viewport width */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  margin: 0 auto; /* Center the section if needed */
+  box-sizing: border-box; /* Include padding and borders in width calculation */
+  padding: 0 10px; /* Add minimal padding, adjustable */
+}
+
+/* Style the chart wrapper to enforce width constraints */
+.chart-wrapper {
+  width: 100%;
+  max-width: 100%; /* Ensure it doesn’t exceed parent */
+  overflow-x: auto; /* Allow scrolling only if content overflows (optional) */
+}
+
+/* Style the legend container */
+.performance-metrics .custom-legend {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+/* Target legend items */
+.performance-metrics .recharts-legend-item {
+  margin: 0 10px;
+}
+
+/* Default legend icon size for desktop */
+.performance-metrics .recharts-legend-item svg,
+.performance-metrics .recharts-legend-icon {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+}
+
+/* Adjust legend icon size for mobile devices */
+@media (max-width: 768px) {
+  .performance-metrics .recharts-legend-item svg,
+  .performance-metrics .recharts-legend-icon {
+    width: 8px !important;
+    height: 8px !important;
+    min-width: 8px !important;
+    min-height: 8px !important;
+  }
+  .performance-metrics .recharts-legend-item {
+    margin: 0 5px;
+  }
+  .performance-metrics .custom-legend {
+    padding: 5px 0;
+  }
+}
+
+/* Ensure X-axis labels don’t force excessive width */
+.performance-metrics .recharts-cartesian-axis-tick {
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Optional: Reset any global SVG styles that might interfere */
+svg {
+  display: inline-block;
+  vertical-align: middle;
 }
