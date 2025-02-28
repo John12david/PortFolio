@@ -116,9 +116,9 @@ const AboutSection = () => {
     <section className="summary log-section" id="about">
       <h2>System Log</h2>
       <div className="log-container">
-        <p><span className="timestamp">[2023-05-01]</span> Deployed at Maveric Systems Limited. Role: Test Engineer. Focus: Banking performance testing.</p>
+        <p><span className="timestamp">[2023-05-10]</span> Deployed at Maveric Systems Limited. Role: Test Engineer. Focus: Banking performance testing.</p>
         <p><span className="timestamp">[2022-08-01]</span> Initialized at Revature India. Task: Salesforce performance optimization.</p>
-        <p><span className="timestamp">[2021-06-01]</span> System upgrade completed: B.E. in Electronics and Communication.</p>
+        <p><span className="timestamp">[2022-06-01]</span> System upgrade completed: B.E. in Electronics and Communication.</p>
       </div>
     </section>
   );
