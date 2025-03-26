@@ -198,11 +198,28 @@ const ExperienceSection = () => {
   );
 };
 
-// Performance Dashboard (Animated Chart with Load Levels)
+// Performance Dashboard with Before (40s) and After (4-5s) Optimization
 const PerformanceDashboard = ({ runStressTestRef }) => {
-  const [chartData, setChartData] = React.useState([{ time: '0s', responseTime: 500 }]);
+  const [chartData, setChartData] = React.useState([]);
   const [isTesting, setIsTesting] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
+  const [currentLoad, setCurrentLoad] = React.useState(''); // Track current load level
+
+  // Define load configurations at component scope
+  const loadConfigs = {
+    low: { users: 50, beforeBase: 20000, afterBase: 2000 },    // 20s -> 2s
+    medium: { users: 200, beforeBase: 40000, afterBase: 4500 }, // 40s -> 4.5s
+    high: { users: 1000, beforeBase: 60000, afterBase: 6000 },  // 60s -> 6s
+  };
+
+  // Dynamically calculate the Y-axis domain based on the current load
+  const getYDomain = () => {
+    if (!currentLoad) return [0, 70000]; // Default to 70s if no load is selected
+    const { beforeBase } = loadConfigs[currentLoad];
+    // Add a 20% buffer to the max value for better visualization
+    const maxValue = beforeBase * 1.2;
+    return [0, maxValue];
+  };
 
   // Handle window resize to detect mobile view
   React.useEffect(() => {
@@ -211,16 +228,20 @@ const PerformanceDashboard = ({ runStressTestRef }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Simulate a stress test with varying load levels
+  // Simulate a stress test with "before" and "after" optimization data
   const runStressTest = (loadLevel = 'medium') => {
     setIsTesting(true);
-    setChartData([{ time: '0s', responseTime: 500 }]);
-    const baseResponse = loadLevel === 'low' ? 200 : loadLevel === 'medium' ? 300 : 500;
+    setChartData([]); // Reset chart data
+    setCurrentLoad(loadLevel); // Update current load
+
+    const { beforeBase, afterBase } = loadConfigs[loadLevel];
     const testSteps = Array.from({ length: 5 }, (_, i) => ({
       time: `${i + 1}s`,
-      responseTime: baseResponse + Math.random() * 100 - 50,
+      beforeResponseTime: beforeBase + Math.random() * 5000 - 2500, // ±2.5s variation
+      afterResponseTime: afterBase + Math.random() * 1000 - 500,    // ±0.5s variation
     }));
 
+    // Simulate real-time data updates over 5 seconds
     testSteps.forEach((step, index) => {
       setTimeout(() => {
         setChartData(prev => [...prev, step]);
@@ -250,32 +271,53 @@ const PerformanceDashboard = ({ runStressTestRef }) => {
           High Load (1000 users)
         </button>
       </div>
-      <div className="chart-wrapper"> {/* Added wrapper for better control */}
-        <ResponsiveContainer width="100%" height={isMobile ? 160 : 220}>
+      {currentLoad && (
+        <p style={{ color: '#00ff00', fontSize: '0.9rem', textAlign: 'center', margin: '10px 0' }}>
+          Current Load: {currentLoad.charAt(0).toUpperCase() + currentLoad.slice(1)} ({loadConfigs[currentLoad]?.users} users)
+        </p>
+      )}
+      <div className="chart-wrapper">
+        <ResponsiveContainer width="100%" height={isMobile ? 200 : 300}> {/* Reduced height from 400 to 300 on desktop */}
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-            <XAxis dataKey="time" stroke="#00ff00" style={{ fontSize }} interval="preserveStartEnd" /> {/* Optimize X-axis labels */}
-            <YAxis stroke="#00ff00" style={{ fontSize }} />
+            <XAxis dataKey="time" stroke="#00ff00" style={{ fontSize }} interval="preserveStartEnd" />
+            <YAxis
+              stroke="#00ff00"
+              style={{ fontSize }}
+              domain={getYDomain()} // Dynamically set the Y-axis domain
+              tickFormatter={(value) => `${(value / 1000).toFixed(1)}s`} // Convert ms to seconds
+            />
             <Tooltip
               contentStyle={{ background: '#1a1a1a', border: '1px solid #00ff00', color: '#00ff00' }}
               labelStyle={{ color: '#ffcc00', fontSize }}
+              formatter={(value) => `${(value / 1000).toFixed(1)}s`} // Show tooltip in seconds
             />
             <Legend
-              iconType="plainline"
               wrapperStyle={{ color: '#ff4500', fontSize, paddingTop: isMobile ? 5 : 10 }}
-              className="custom-legend"
             />
             <Line
               type="monotone"
-              dataKey="responseTime"
-              stroke="#ff4500"
+              dataKey="beforeResponseTime"
+              stroke="#ff4500" // Red for "before"
               strokeWidth={isMobile ? 1 : 2}
               dot={{ r: isMobile ? 2 : 4, fill: '#ff4500' }}
-              activeDot={{ r: isMobile ? 4 : 6, fill: '#ff4500' }}
-              legendType="plainline"
+              activeDot={{ r: isMobile ? 4 : 6 }}
+              name="Before Optimization"
+            />
+            <Line
+              type="monotone"
+              dataKey="afterResponseTime"
+              stroke="#00ff00" // Green for "after"
+              strokeWidth={isMobile ? 1 : 2}
+              dot={{ r: isMobile ? 2 : 4, fill: '#00ff00' }}
+              activeDot={{ r: isMobile ? 4 : 6 }}
+              name="After Optimization"
             />
           </LineChart>
         </ResponsiveContainer>
+        <p style={{ color: '#00ff00', fontSize: '0.9rem', textAlign: 'center', marginTop: '10px' }}>
+          Based on real optimization: {(loadConfigs[currentLoad]?.beforeBase / 1000).toFixed(1)}s → {(loadConfigs[currentLoad]?.afterBase / 1000).toFixed(1)}s for {loadConfigs[currentLoad]?.users} users
+        </p>
       </div>
     </section>
   );
@@ -318,6 +360,11 @@ const ContactSection = () => (
         john-david [64 bytes]
       </a>
     </p>
+    <p>
+      Resume: <a href="mailto:john12david05@gmail.com?subject=Request%20for%20Resume&body=Hello%20John%20David,%0D%0A%0D%0AI%20am%20interested%20in%20learning%20more%20about%20your%20experience.%20Could%20you%20please%20share%20your%20resume%20with%20me?%0D%0A%0D%0AThank%20you!" className="request-resume-button">
+        Request Resume [via email]
+      </a>
+    </p>
   </footer>
 );
 
@@ -349,6 +396,10 @@ const App = () => {
       case 'reboot':
         window.location.reload();
         break;
+      case 'request resume':
+        // Open email client with pre-filled email
+        window.location.href = "mailto:john12david05@gmail.com?subject=Request%20for%20Resume&body=Hello%20John%20David,%0D%0A%0D%0AI%20am%20interested%20in%20learning%20more%20about%20your%20experience.%20Could%20you%20please%20share%20your%20resume%20with%20me?%0D%0A%0D%0AThank%20you!";
+        break;
       default:
         console.log(`Unknown command: ${command}`);
     }
@@ -357,14 +408,14 @@ const App = () => {
   const performanceMetrics = [
     {
       title: 'Before Optimization (Banking App)',
-      responseTime: 500,
+      responseTime: 40000, // 40s
       throughput: 100,
       errorRate: 10,
       load: 50,
     },
     {
       title: 'After Optimization (Banking App)',
-      responseTime: 150,
+      responseTime: 4500, // 4.5s
       throughput: 300,
       errorRate: 2,
       load: 200,
