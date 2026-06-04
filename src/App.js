@@ -1225,7 +1225,7 @@ function AboutSection() {
   return (
     <section className="section" id="about">
       <div className="divider" style={{marginBottom:'3rem'}} />
-      <div className="section-label">// about</div>
+      <div className="section-label">{'// about'}</div>
       <div className="section-title">The Engineer Behind the <span className="accent">Metrics</span></div>
       <div className="about-grid">
         <div className="about-bio">
@@ -1270,7 +1270,7 @@ function SkillsSection() {
   return (
     <section className="section" id="skills" ref={ref}>
       <div className="divider" style={{marginBottom:'3rem'}} />
-      <div className="section-label">// skills</div>
+      <div className="section-label">{'// skills'}</div>
       <div className="section-title">Full <span className="accent">Toolstack</span></div>
       <div className="skills-grid">
         {SKILLS.map((group, gi) => (
@@ -1303,7 +1303,7 @@ function ExperienceSection() {
   return (
     <section className="section" id="experience">
       <div className="divider" style={{marginBottom:'3rem'}} />
-      <div className="section-label">// experience</div>
+      <div className="section-label">{'// experience'}</div>
       <div className="section-title">Career <span className="accent">Timeline</span></div>
       <div className="timeline">
         {EXPERIENCE.map((exp, i) => (
@@ -1335,7 +1335,7 @@ function CaseStudiesSection() {
   return (
     <section className="section" id="cases">
       <div className="divider" style={{marginBottom:'3rem'}} />
-      <div className="section-label">// case studies</div>
+      <div className="section-label">{'// case studies'}</div>
       <div className="section-title">Performance <span className="accent">War Stories</span></div>
       <div className="case-studies-grid">
         {CASE_STUDIES.map((c, i) => {
@@ -1412,7 +1412,7 @@ function PerformanceLabSection() {
   return (
     <section className="section" id="lab">
       <div className="divider" style={{marginBottom:'3rem'}} />
-      <div className="section-label">// interactive</div>
+      <div className="section-label">{'// interactive'}</div>
       <div className="section-title">Performance <span className="accent">Lab</span></div>
       <p style={{color:'var(--text-muted)', fontSize:'0.875rem', marginBottom:'1.5rem', maxWidth:600}}>
         Live simulation of real optimization results from the Bank ABC project. Select a load scenario to see Before vs After optimization response times.
@@ -1489,7 +1489,7 @@ function ContactSection() {
   return (
     <section className="section" id="contact">
       <div className="divider" style={{marginBottom:'3rem'}} />
-      <div className="section-label">// contact</div>
+      <div className="section-label">{'// contact'}</div>
       <div className="contact-grid">
         <div>
           <div className="contact-headline">
