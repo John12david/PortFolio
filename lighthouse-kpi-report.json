@@ -1,0 +1,11 @@
+{
+  "url": "https://www.google.com/",
+  "performanceScore": 49,
+  "firstContentfulPaint": "3.0 s",
+  "largestContentfulPaint": "4.7 s",
+  "totalBlockingTime": "1,810 ms",
+  "cumulativeLayoutShift": "0.026",
+  "speedIndex": "4.2 s",
+  "timeToInteractive": "9.8 s",
+  "generatedAt": "2026-02-19T07:17:36.308Z"
+}

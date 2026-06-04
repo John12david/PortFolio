@@ -1,0 +1,2 @@
+url,performanceScore,firstContentfulPaint,largestContentfulPaint,totalBlockingTime,cumulativeLayoutShift,speedIndex,timeToInteractive,generatedAt
+https://www.google.com/,49,3.0 s,4.7 s,1,810 ms,0.026,4.2 s,9.8 s,2026-02-19T07:17:36.308Z
